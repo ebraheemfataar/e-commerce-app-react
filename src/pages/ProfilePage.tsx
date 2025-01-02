@@ -1,18 +1,18 @@
-import React, { useEffect } from 'react'
-import { Box, Button, Typography } from '@mui/material'
-import { useNavigate } from 'react-router'
-import { Link } from 'react-router-dom'
+import React, { useEffect } from "react";
+import { Box, Button, Typography } from "@mui/material";
+import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
-import Header from '../component/Header'
-import useCustomSelector from '../hooks/useCustomSelector'
-import useAppDispatch from '../hooks/useAppDispatch'
-import { authenticate } from '../redux/reducers/usersReducer'
+import Header from "../component/Header";
+import useCustomSelector from "../hooks/useCustomSelector";
+import useAppDispatch from "../hooks/useAppDispatch";
+import authenticate from "../redux/reducers/usersReducer";
 
 const ProfilePage = () => {
-  const { currentUser, isLoggedIn } = useCustomSelector((state) => state.usersReducer)
-  const handleUpdateProfile = () => {
-
-  }
+  const { currentUser, isLoggedIn } = useCustomSelector(
+    (state) => state.usersReducer
+  );
+  const handleUpdateProfile = () => {};
   if (!currentUser) {
     return (
       <div>
@@ -22,7 +22,7 @@ const ProfilePage = () => {
         </Typography>
         <Link to="/login">Login</Link>
       </div>
-    )
+    );
   }
   return (
     <div>
@@ -33,7 +33,12 @@ const ProfilePage = () => {
         alignItems="center"
         marginTop={4}
       >
-        <Typography variant="h4" component="h4" textAlign="center" marginBottom={2}>
+        <Typography
+          variant="h4"
+          component="h4"
+          textAlign="center"
+          marginBottom={2}
+        >
           Welcome, {currentUser.name}
         </Typography>
         <Box
@@ -46,13 +51,23 @@ const ProfilePage = () => {
           <img
             src={currentUser.avatar}
             alt={currentUser.name}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
         </Box>
-        <Typography variant="h6" component="h6" textAlign="center" marginBottom={1}>
+        <Typography
+          variant="h6"
+          component="h6"
+          textAlign="center"
+          marginBottom={1}
+        >
           Email: {currentUser.email}
         </Typography>
-        <Typography variant="h6" component="h6" textAlign="center" marginBottom={1}>
+        <Typography
+          variant="h6"
+          component="h6"
+          textAlign="center"
+          marginBottom={1}
+        >
           Role: {currentUser.role}
         </Typography>
         <Button variant="contained" onClick={handleUpdateProfile}>
@@ -60,7 +75,7 @@ const ProfilePage = () => {
         </Button>
       </Box>
     </div>
-  )
-}
+  );
+};
 
-export default ProfilePage
+export default ProfilePage;
