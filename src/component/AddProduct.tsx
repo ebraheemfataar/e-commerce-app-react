@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react"
-import { Button, MenuItem, Select, TextField } from "@mui/material"
+import { useEffect, useState } from "react";
+import { Button, MenuItem, TextField } from "@mui/material";
 
-import { CreateProduct } from "../type/Product"
-import useCustomSelector from "../hooks/useCustomSelector"
-import useAppDispatch from "../hooks/useAppDispatch"
-import { fetchAllCartegories } from "../redux/reducers/cartegoriesReducer"
-import { Category } from "../type/Category"
-import { addNewProduct } from "../redux/reducers/productsReducer"
+import { CreateProduct } from "../type/Product";
+import useCustomSelector from "../hooks/useCustomSelector";
+import useAppDispatch from "../hooks/useAppDispatch";
+import { fetchAllCartegories } from "../redux/reducers/cartegoriesReducer";
+import { Category } from "../type/Category";
+import { addNewProduct } from "../redux/reducers/productsReducer";
 
 const AddProduct = () => {
   const [product, setProduct] = useState<CreateProduct>({
@@ -15,36 +15,36 @@ const AddProduct = () => {
     description: "",
     categoryId: 1,
     images: [],
-  }) 
+  });
 
-  const [file, setFile] = useState<File | null>(null) 
-  const [productCategories, setProductCategories] = useState<Category[]>([]) 
+  const [file, setFile] = useState<File | null>(null);
+  const [productCategories, setProductCategories] = useState<Category[]>([]);
 
   const categories = useCustomSelector(
     (state) => state.cartegoriesReducer.categories
-  ) 
-  const dispatch = useAppDispatch() 
+  );
+  const dispatch = useAppDispatch();
 
-  const [titleError, setTitleError] = useState("") 
-  const [priceError, setPriceError] = useState("") 
-  const [descriptionError, setDescriptionError] = useState("") 
+  const [titleError, setTitleError] = useState("");
+  const [priceError, setPriceError] = useState("");
+  const [descriptionError, setDescriptionError] = useState("");
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files && event.target.files[0] 
-    setFile(selectedFile) 
-  } 
+    const selectedFile = event.target.files && event.target.files[0];
+    setFile(selectedFile);
+  };
 
   const handleCreateProduct = () => {
     if (!validateForm()) {
-      return 
+      return;
     }
 
     const updatedProduct = {
       ...product,
       images: [],
-    } 
+    };
 
-    dispatch(addNewProduct({ file, product: updatedProduct })) 
+    dispatch(addNewProduct({ file, product: updatedProduct }));
 
     setProduct({
       title: "",
@@ -52,51 +52,51 @@ const AddProduct = () => {
       description: "",
       categoryId: 1,
       images: [],
-    }) 
-    setFile(null)
-  }
+    });
+    setFile(null);
+  };
 
-  const handleInputChange =
-    (field: keyof CreateProduct) =>
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setProduct((prevProduct) => ({
-        ...prevProduct,
-        [field]: event.target.value,
-      })) 
-    } 
+  const handleInputChange = (field: keyof CreateProduct) => (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setProduct((prevProduct) => ({
+      ...prevProduct,
+      [field]: event.target.value,
+    }));
+  };
 
   const validateForm = () => {
-    let isValid = true 
+    let isValid = true;
 
     if (!product.title) {
-      setTitleError("Title is required") 
-      isValid = false 
+      setTitleError("Title is required");
+      isValid = false;
     } else {
-      setTitleError("") 
+      setTitleError("");
     }
 
     if (!product.price || isNaN(product.price) || product.price <= 0) {
-      setPriceError("Price must be a positive number") 
-      isValid = false 
+      setPriceError("Price must be a positive number");
+      isValid = false;
     } else {
-      setPriceError("") 
+      setPriceError("");
     }
 
     if (!product.description) {
-      setDescriptionError("Description is required") 
-      isValid = false 
+      setDescriptionError("Description is required");
+      isValid = false;
     } else {
-      setDescriptionError("") 
+      setDescriptionError("");
     }
 
-    return isValid 
-  } 
+    return isValid;
+  };
 
   useEffect(() => {
     dispatch(fetchAllCartegories()).then(() => {
-      setProductCategories(categories) 
-    }) 
-  }, [dispatch, productCategories]) 
+      setProductCategories(categories);
+    });
+  }, [dispatch, productCategories]);
   return (
     <div>
       <TextField
@@ -142,7 +142,7 @@ const AddProduct = () => {
         Create Product
       </Button>
     </div>
-  ) 
-} 
+  );
+};
 
-export default AddProduct 
+export default AddProduct;
